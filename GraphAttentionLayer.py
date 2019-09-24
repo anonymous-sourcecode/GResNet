@@ -104,14 +104,14 @@ class SpGraphAttentionLayer(nn.Module):
 
         h = torch.mm(input, self.W)
         # h: N x out
-        #assert not torch.isnan(h).any()
+        assert not torch.isnan(h).any()
 
         # Self-attention on the nodes - Shared attention mechanism
         edge_h = torch.cat((h[edge[0, :], :], h[edge[1, :], :]), dim=1).t()
         # edge: 2*D x E
 
         edge_e = torch.exp(-self.leakyrelu(self.a.mm(edge_h).squeeze()))
-        #assert not torch.isnan(edge_e).any()
+        assert not torch.isnan(edge_e).any()
         # edge_e: E
 
         e_rowsum = self.special_spmm(edge, edge_e, torch.Size([N, N]), torch.ones(size=(N,1), device=dv))
@@ -121,12 +121,12 @@ class SpGraphAttentionLayer(nn.Module):
         # edge_e: E
 
         h_prime = self.special_spmm(edge, edge_e, torch.Size([N, N]), h)
-        #assert not torch.isnan(h_prime).any()
+        assert not torch.isnan(h_prime).any()
         # h_prime: N x out
         
         h_prime = h_prime.div(e_rowsum)
         # h_prime: N x out
-        #assert not torch.isnan(h_prime).any()
+        assert not torch.isnan(h_prime).any()
 
         if self.concat:
             # if this layer is not last layer,

@@ -84,9 +84,7 @@ class MethodDeepLoopyResNet(nn.Module):
         return parameter_list
 
     def forward(self, raw_x, adj, adj2 = None):
-        if self.residual_type == 'none' or self.residual_type == None:
-            return self.forward_none(raw_x, adj)
-        elif self.residual_type == 'naive':
+        if self.residual_type == 'naive':
             return self.forward_naive(raw_x, adj)
         elif self.residual_type == 'raw':
             return self.forward_raw(raw_x, adj)

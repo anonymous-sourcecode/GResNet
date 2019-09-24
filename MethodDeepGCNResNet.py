@@ -62,9 +62,7 @@ class MethodDeepGCNResNet(nn.Module):
 
     # ---- non residual ----
     def forward(self, raw_x, adj, eigen_adj=None):
-        if self.residual_type == 'none':
-            return self.forward_none(raw_x, adj)
-        elif self.residual_type == 'naive':
+        if self.residual_type == 'naive':
             return self.forward_naive(raw_x, adj)
         elif self.residual_type == 'raw':
             return self.forward_raw(raw_x, adj)

@@ -49,13 +49,13 @@ if 0:
 
 #--------------- GCN --------------
 
-dataset_name = 'pubmed'
+dataset_name = 'cora'
 
 if 0:
-    residual_type = 'graph_naive'
+    residual_type = 'naive'
     depth_list = [1, 2, 3, 4, 5, 6, 7]
     result_obj = ResultSaving('', '')
-    result_obj.result_destination_folder_path = '../../result/GResNet2/'
+    result_obj.result_destination_folder_path = './result/GResNet/'
     best_score = {}
 
     depth_result_dict = {}
@@ -98,12 +98,12 @@ if 0:
 #--------------- GAT ---------------
 
 #---- GAT naive residual ----
-if 1:
+if 0:
     residual_type = 'graph_raw'
     epoch_number = 500
     depth_list = [1, 2, 3, 4, 5, 6, 7]
     result_obj = ResultSaving('', '')
-    result_obj.result_destination_folder_path = '../../result/GResNet2/'
+    result_obj.result_destination_folder_path = './result/GResNet/'
     best_score = {}
 
     depth_result_dict = {}
@@ -143,7 +143,7 @@ if 0:
     residual_type = 'graph_raw'
     depth_list = [1, 2, 3, 4, 5, 6, 7]
     result_obj = ResultSaving('', '')
-    result_obj.result_destination_folder_path = '../../result/GResNet2/'
+    result_obj.result_destination_folder_path = './result/GResNet/'
     best_score = {}
 
     depth_result_dict = {}

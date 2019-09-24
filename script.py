@@ -12,9 +12,8 @@ import torch
 #--------------------------------------------------------
 
 #---- 'cora' , 'citeseer', 'pubmed' ----
-#dataset_name = 'cora'
-#dataset_name = 'citeseer'
-dataset_name = 'pubmed'
+
+dataset_name = 'cora'
 
 if dataset_name == 'cora':
     nclass = 7
@@ -28,10 +27,9 @@ elif dataset_name == 'pubmed':
 
 #---- Deep GCN ResNet baseline method ----
 if 0:
-    for depth in [2]:#[1, 2, 3, 4, 5, 6, 7]:
-        #---- [none, naive, raw, graph_naive, graph_raw] ----
-        #for residual_type in ['none']:
-        for residual_type in ['none']:#, 'naive', 'raw', 'graph_naive', 'graph_raw']:
+    for depth in [1, 2, 3, 4, 5, 6, 7]:
+        for residual_type in ['naive', 'raw', 'graph_naive', 'graph_raw']:
+
             acc_test_list = []
             print('Method: GCN, dataset: ' + dataset_name + ', depth: ' + str(depth) + ', residual type: ' + residual_type)
             for iter in range(1):
@@ -49,7 +47,7 @@ if 0:
                 print('Start')
 
                 data_obj = DatasetLoader('', '')
-                data_obj.dataset_source_folder_path = '../../data/' + dataset_name + '/'
+                data_obj.dataset_source_folder_path = './data/' + dataset_name + '/'
                 data_obj.c = c
                 data_obj.method_type = 'GCN'
 
@@ -59,7 +57,7 @@ if 0:
                 method_obj.residual_type = residual_type
 
                 result_obj = ResultSaving('', '')
-                result_obj.result_destination_folder_path = '../../result/GResNet/'
+                result_obj.result_destination_folder_path = './result/GResNet/'
                 result_obj.result_destination_file_name = 'DeepGCNResNet_' + dataset_name + '_' + residual_type + '_depth_' + str(depth) + '_iter_' + str(iter)
 
                 setting_obj = SettingCV('', '')
@@ -83,17 +81,9 @@ if 0:
 
 #---- Deep Sparse GAT baseline method ----
 if 0:
-    for depth in [6, 7]:#, 6, 5, 4, 3, 2, 1]:
-        #---- [none, naive, raw, graph_naive, graph_raw] ----
-        #for residual_type in ['none']:
-        #for residual_type in ['naive']:
-        #for residual_type in ['raw']:
-        #for residual_type in ['graph_naive']:
-        #for residual_type in ['graph_raw']:
+    for depth in [1, 2, 3, 4, 5, 6, 7]:
+        for residual_type in ['naive', 'raw', 'graph_naive', 'graph_raw']:
 
-        for residual_type in ['none']:
-        #for residual_type in ['graph_naive', 'graph_raw']:
-        #for residual_type in ['none', 'naive', 'raw', 'graph_naive', 'graph_raw']:
             cuda_tag = False
             print('Method: GAT, dataset: ' + dataset_name + ', depth: ' + str(depth) + ', residual type: ' + residual_type)
             method_type = 'GAT'
@@ -116,7 +106,7 @@ if 0:
                 print('Start')
 
                 data_obj = DatasetLoader('', '')
-                data_obj.dataset_source_folder_path = '../../data/' + dataset_name + '/'
+                data_obj.dataset_source_folder_path = './data/' + dataset_name + '/'
                 data_obj.c = c
                 data_obj.method_type = method_type
 
@@ -128,7 +118,7 @@ if 0:
                 method_obj.residual_type = residual_type
 
                 result_obj = ResultSaving('', '')
-                result_obj.result_destination_folder_path = '../../result/GResNet/'
+                result_obj.result_destination_folder_path = './result/GResNet/'
                 result_obj.result_destination_file_name = 'DeepGATResNet_' + dataset_name + '_' + residual_type + '_depth_' + str(
                     depth) + '_iter_' + str(iter)
 
@@ -152,11 +142,9 @@ if 0:
 #--------------------------------------------------------
 
 #---- Deep LoopyNet baseline method ----
-if 1:
-    for depth in [4, 1, 2, 3, 4, 5, 6, 7]:
-        #---- [none, naive, raw, graph_naive, graph_raw] ----
-        #for residual_type in ['naive']:
-        for residual_type in ['none', 'naive', 'raw', 'graph_naive', 'graph_raw']:
+if 0:
+    for depth in [1, 2, 3, 4, 5, 6, 7]:
+        for residual_type in ['naive', 'raw', 'graph_naive', 'graph_raw']:
             cuda_tag = False
 
             print('Method: LoopyNet, dataset: ' + dataset_name + ', depth: ' + str(depth) + ', residual type: ' + residual_type)
@@ -176,7 +164,7 @@ if 1:
                 print('Start')
 
                 data_obj = DatasetLoader('', '')
-                data_obj.dataset_source_folder_path = '../../data/' + dataset_name + '/'
+                data_obj.dataset_source_folder_path = './data/' + dataset_name + '/'
                 data_obj.c = c
                 data_obj.method_type = 'LoopyNet'
 
@@ -186,7 +174,7 @@ if 1:
                 method_obj.residual_type = residual_type
 
                 result_obj = ResultSaving('', '')
-                result_obj.result_destination_folder_path = '../../result/GResNet/'
+                result_obj.result_destination_folder_path = './result/GResNet/'
                 result_obj.result_destination_file_name = 'DeepLoopyNetResNet_' + dataset_name + '_' + residual_type+'_depth_' + str(depth) + '_iter_' + str(iter)
 
                 setting_obj = SettingCV('', '')

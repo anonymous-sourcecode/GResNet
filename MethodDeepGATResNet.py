@@ -36,19 +36,19 @@ class MethodDeepGATResNet(nn.Module):
 
         if self.depth == 1:
             self.gat_list = []
-            self.out_att = SpGraphAttentionLayer(nfeat, nclass, dropout=dropout, alpha=alpha, concat=False)
+            self.out_att = GraphAttentionLayer(nfeat, nclass, dropout=dropout, alpha=alpha, concat=False)
             self.residual_weight_list[self.depth-1] = Parameter(torch.FloatTensor(nfeat, nclass))
         else:
             for depth_index in range(self.depth - 1):
                 if depth_index == 0:
-                    self.gat_list[depth_index] = [SpGraphAttentionLayer(nfeat, nhid, dropout=dropout, alpha=alpha, concat=True) for _ in range(nheads)]
+                    self.gat_list[depth_index] = [GraphAttentionLayer(nfeat, nhid, dropout=dropout, alpha=alpha, concat=True) for _ in range(nheads)]
                     self.residual_weight_list[depth_index] = Parameter(torch.FloatTensor(nfeat, nhid * nheads))
                 else:
-                    self.gat_list[depth_index] = [SpGraphAttentionLayer(nhid * nheads, nhid, dropout=dropout, alpha=alpha, concat=True) for _ in range(nheads)]
+                    self.gat_list[depth_index] = [GraphAttentionLayer(nhid * nheads, nhid, dropout=dropout, alpha=alpha, concat=True) for _ in range(nheads)]
                     self.residual_weight_list[depth_index] = Parameter(torch.FloatTensor(nhid * nheads, nhid * nheads))
                 for i, attention in enumerate(self.gat_list[depth_index]):
                     self.add_module('attention_{}_{}'.format(depth_index, i), attention)
-            self.out_att = SpGraphAttentionLayer(nhid * nheads, nclass, dropout=dropout, alpha=alpha, concat=False)
+            self.out_att = GraphAttentionLayer(nhid * nheads, nclass, dropout=dropout, alpha=alpha, concat=False)
             self.residual_weight_list[self.depth-1] = Parameter(torch.FloatTensor(nhid * nheads, nclass))
         for i in range(self.depth):
             stdv = 1. / math.sqrt(self.residual_weight_list[i].size(1))
@@ -56,9 +56,7 @@ class MethodDeepGATResNet(nn.Module):
 
     #---- non residual ----
     def forward(self, raw_x, adj):
-        if self.residual_type == 'none' or self.residual_type == None:
-            return self.forward_non(raw_x, adj)
-        elif self.residual_type == 'naive':
+        if self.residual_type == 'naive':
             return self.forward_naive(raw_x, adj)
         elif self.residual_type == 'raw':
             return self.forward_raw(raw_x, adj)
